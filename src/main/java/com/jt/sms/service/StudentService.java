@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-    public List<Student> gStudents() {
+    public List<Student> getStudents() {
         return studentRepository.findAll();
     }
     

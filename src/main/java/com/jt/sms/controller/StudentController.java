@@ -21,7 +21,7 @@ public class StudentController {
 
     @GetMapping("/students")
     public List<Student> gStudents() {
-        return studentService.gStudents();
+        return studentService.getStudents();
     }
 
     @GetMapping("/student/{id}")
