@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student {
+public class Student {                                                                                        
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String studentid;
