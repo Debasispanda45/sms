@@ -1,9 +1,13 @@
 package com.jt.sms.exception;
 
 import java.time.LocalDateTime;
+import java.util.StringJoiner;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -45,6 +49,20 @@ public class HandleException {
         problemDetail.setTitle("Method Not Allowed");
         problemDetail.setProperty("TimeStamp", LocalDateTime.now().toString());
 
+        return problemDetail;
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        var details = new  StringJoiner(", ");
+
+        e.getAllErrors().forEach(error -> {
+            var errorMessage = error.getDefaultMessage();
+            var fieldName = ((FieldError) error).getField();
+            details.add(fieldName + ": " + errorMessage);
+        });
+        var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, details.toString());
+        problemDetail.setTitle("INVALID DATA");
+        problemDetail.setProperty("TimeStamp", LocalDateTime.now().toString());
         return problemDetail;
     }
 }

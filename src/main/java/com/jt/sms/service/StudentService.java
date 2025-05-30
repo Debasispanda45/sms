@@ -1,7 +1,6 @@
 package com.jt.sms.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -31,6 +30,13 @@ public class StudentService {
     public void deleteStudentById(String id) {
         var existingStudent = getStudentById(id);
         studentRepository.delete(existingStudent);
+    }
+
+    public Student updateStudentById(String StudentId, Student student) {
+        student.setStudentid(StudentId);
+        return studentRepository.save(student);
+
+        
     }
     
 }
